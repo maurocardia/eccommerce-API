@@ -12,10 +12,10 @@ const startServer = async () => {
         initModels();
         await db.sync();
 
-        const PORT = 4000;
+        const PORT = process.env.PORT ||4000;
 
         app.listen(PORT, () => {
-            console.log('express app runing!');
+            console.log('express app runing!', PORT);
         });
     } catch (error) {
         console.log(error);
