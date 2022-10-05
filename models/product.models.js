@@ -1,4 +1,4 @@
-const { db, DataTypes } = require("../utils/database.util")
+const { db, DataTypes } = require('../utils/database.util');
 
 const Product = db.define('product', {
     id: {
@@ -15,7 +15,7 @@ const Product = db.define('product', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    
+
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -9,16 +9,14 @@ const sendErrorDev = (error, req, res) => {
         status: error.status,
         message: error.message,
         error,
-        stack: error.stack,
+        staack: error.stack,
     });
 };
 
 const sendErrorProd = (error, req, res) => {
     res.status(error.statusCode).json({
         status: error.status,
-        message: error.message,
-        error,
-        stack: error.stack,
+        message: error.message || 'something  went  wrong!',
     });
 };
 

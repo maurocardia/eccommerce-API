@@ -11,17 +11,20 @@ const addProducts = catchAsync(async (req, res, next) => {
     const { sessionUser, cartMax } = req;
 
     const products = await Product.findOne({ where: { id: productId } });
-    const productsIncart = await ProductsInCart.findOne({
-        where: { cartId: cartMax[0].id },
-    });
+    console.log(cartMax);
 
-    if (JSON.stringify(cartMax) === '') {
+    if (JSON.stringify(cartMax) === '[]') {
         newCart = await Cart.create({ userId: sessionUser.id });
         cartMax[0] = newCart;
     } else if (cartMax[0].status !== 'active' || !cartMax[0].status) {
         newCart = await Cart.create({ userId: sessionUser.id });
         cartMax[0] = newCart;
     }
+
+    console.log(cartMax);
+    const productsIncart = await ProductsInCart.findOne({
+        where: { cartId: cartMax[0].id },
+    });
 
     if (quantity > products.quantity) {
         return next(
@@ -70,7 +73,7 @@ const updateProductCart = catchAsync(async (req, res, next) => {
     const actualProduct = await ProductsInCart.findOne({
         where: { cartId: cartMax[0].id, productId },
     });
-   
+
     if (newQty > products.quantity) {
         return next(
             new AppError(
@@ -143,6 +146,9 @@ const purchaseCart = catchAsync(async (req, res, next) => {
         });
     }
 
+    if(totalPrice===0){
+        return next(new AppError("please select at least one product"))
+    }
     const createOrder = await Order.create({
         cartId: cartMax[0].id,
         userId: sessionUser.id,
