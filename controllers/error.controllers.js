@@ -16,7 +16,7 @@ const sendErrorDev = (error, req, res) => {
 const sendErrorProd = (error, req, res) => {
     res.status(error.statusCode).json({
         status: error.status,
-        message: error.message || 'something  went  wrong!', 
+        message: error.message, 
         error
     });
 };
